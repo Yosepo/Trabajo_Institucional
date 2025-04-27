@@ -1,0 +1,54 @@
+@State var nombreCompleto: String = ""
+@State var cargo: String = ""
+@State var empresa: String = ""
+@State var mostrarFoto: Bool = false
+
+var body: some View {
+    Form {
+        Section {
+            TextField("Nombre", text: $nombreCompleto)
+            TextField("Cargo", text: $cargo)
+            TextField("Empresa", text: $empresa)
+        }
+
+        Section {
+            Button(action: {
+                mostrarFoto = true
+            }) {
+                Text("Generar fotocheck")
+            }
+        }
+    }
+    .sheet(isPresented: $mostrarFoto) {
+        nombreClase(
+            nombreCompleto: nombreCompleto,
+            cargo: cargo,
+            empresa: empresa
+        )
+    }
+}
+
+
+
+var nombreCompleto: String = ""
+var cargo: String = ""
+var empresa: String = ""
+@Environment(\.dismiss) var dismiss
+
+var body: some View {
+    NavigationStack {
+        VStack {
+            Text(empresa)
+
+            Image(systemName: "person.circle.fill")
+            
+            Text(nombreCompleto)
+            Text(cargo)
+        }
+        .navigationBarItems(trailing: Button(action = {
+            dismiss()
+        }) {
+            Text("Cerrar")
+        })
+    }
+}
