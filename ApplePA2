@@ -1,0 +1,53 @@
+import SwiftUI
+
+struct home: View {
+  
+  @State var showChooseFruit: Bool = false
+  @State var message: String? = nil
+  
+  var body: some View {
+    NavigationStack {
+      VStack {
+        Button(action: {
+          showChooseFruit = true
+        }) {
+          Text("Order juice")
+        }
+        if let message = message {
+          Text(message)
+        }
+      }
+      .sheet(isPresented: $showChooseFruit) {
+        chooseFuit(message: $message)
+      }
+    }
+  }
+}
+
+struct chooseFuit: View {
+  
+  @Binding var message: String?
+  @Environment(\.dismiss) var dismiss
+  
+  var body: some View {
+    NavigationStack {
+      VStack {
+        Text("Choose a flavour")
+        HStack {
+          Button(action: {
+            message = "Escogiste una fresa"
+            dismiss()
+          }) {
+            Image("fresa")
+          }
+          Button(action: {
+            message = "Escogiste una uva"
+            dismiss()
+          }) {
+            Image("uva")
+          }
+        }
+      }
+    }
+  }
+}
